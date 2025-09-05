@@ -5,16 +5,22 @@ on:
     - cron: '0 0 * * *'
   workflow_dispatch:
 
+permissions:
+  contents: write
+  metadata: read
+  statuses: read
+  actions: read
+
 jobs:
   build:
     runs-on: ubuntu-latest
     name: generate
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
       - uses: vn7n24fzkq/github-profile-summary-cards@release
-        env: # default use ${{ secrets.SUMMARY_CARD_TOKEN }}, you can change to your personal access token
-          GITHUB_TOKEN: ${{ secrets.SUMMARY_CARD_TOKEN }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           USERNAME: ${{ github.repository_owner }}
           UTC_OFFSET: 8
